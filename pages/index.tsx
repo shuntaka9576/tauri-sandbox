@@ -1,4 +1,4 @@
-import { invoke } from "@tauri-apps/api";
+import { invoke } from "@tauri-apps/api/tauri";
 import { open } from "@tauri-apps/api/dialog";
 import type { NextPage } from "next";
 import Head from "next/head";
@@ -10,7 +10,8 @@ const Home: NextPage = () => {
   };
 
   const executeCommands = () => {
-    invoke("simple_commnad");
+    const isClient = typeof window !== "undefined";
+    isClient && invoke("simple_commnad");
   };
 
   return (
