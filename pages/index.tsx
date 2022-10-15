@@ -1,9 +1,14 @@
 import { invoke } from "@tauri-apps/api";
+import { open } from "@tauri-apps/api/dialog";
 import type { NextPage } from "next";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 
 const Home: NextPage = () => {
+  const openDialog = () => {
+    open().then((files) => console.log(files));
+  };
+
   const executeCommands = () => {
     invoke("simple_commnad");
   };
@@ -18,6 +23,8 @@ const Home: NextPage = () => {
       <main>
         <div>exec rust code</div>
         <button onClick={executeCommands}>Clickt execute command</button>
+        <div>open dialog</div>
+        <button onClick={openDialog}>openDialog</button>
       </main>
     </div>
   );
