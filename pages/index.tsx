@@ -1,6 +1,7 @@
-import { invoke } from "@tauri-apps/api/tauri";
+import { convertFileSrc, invoke } from "@tauri-apps/api/tauri";
 import { open } from "@tauri-apps/api/dialog";
 import Head from "next/head";
+import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import { useEffect, useState } from "react";
 import * as fs from "@tauri-apps/api/fs";
@@ -98,6 +99,21 @@ const Home = () => {
             {imageFiles.map((imageFile, index) => {
               return <li key={index}>{imageFile.path}</li>;
             })}
+            <div>
+              {imageFiles.map((imageFile, index) => {
+                return (
+                  <div key={`imge${index}`} className="h-64 w-1/2 relative">
+                    <Image
+                      alt={imageFile.name!}
+                      layout="fill"
+                      objectFit="contain"
+                      className="" // TODO tailwind
+                      src={convertFileSrc(imageFile.path!)}
+                    />
+                  </div>
+                );
+              })}
+            </div>
           </ul>
         </div>
       </main>
