@@ -22,6 +22,9 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
+        <h1 className="text-3xl text-red-300 font-bold underline">
+          Hello world!
+        </h1>
         <div>exec rust code</div>
         <button onClick={executeCommands}>Clickt execute command</button>
         <div>open dialog</div>
