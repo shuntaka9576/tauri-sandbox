@@ -5,6 +5,11 @@ import styles from "../styles/Home.module.css";
 import { useEffect, useState } from "react";
 import * as fs from "@tauri-apps/api/fs";
 
+// TODO:windowsだとパス変換が必要
+const SMAPLE_IMAGE_DIR =
+  "/Users/shuntaka/repos/github.com/shuntaka9576/tauri-sandbox/_testdata/images";
+const SAMPLE_IMAGE_FILE = "13cea.JPG";
+
 const Home = () => {
   const [appDir, setAppDir] = useState<string>("");
   const openDialog = () => {
@@ -36,10 +41,18 @@ const Home = () => {
       console.log(`dataDir: ${dataDir}`);
       console.log(`deskTopDir: ${deskTopDir}`);
 
+      // _testdataのファイルをコピーする
       await fs.createDir("images", {
         dir: fs.BaseDirectory.App,
         recursive: true,
       });
+      const appImagesDir = await path.join(appDir, "images", SAMPLE_IMAGE_FILE);
+      const sampleImageFilePath = await path.join(
+        SMAPLE_IMAGE_DIR,
+        SAMPLE_IMAGE_FILE
+      );
+
+      await fs.copyFile(sampleImageFilePath, appImagesDir, {});
     })();
   }, []);
 
