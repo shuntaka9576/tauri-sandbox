@@ -22,13 +22,29 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <h1 className="text-3xl text-red-300 font-bold underline">
-          Hello world!
-        </h1>
-        <div>exec rust code</div>
-        <button onClick={executeCommands}>Clickt execute command</button>
-        <div>open dialog</div>
-        <button onClick={openDialog}>openDialog</button>
+        <h1 className="text-3xl text-black-300 font-bold">tauri-sandbox</h1>
+        <div className="pb-2">
+          <h2 className="font-bold">Command</h2>
+          <div>invoke rust command</div>
+          <button
+            className="rounded-md border border-transparent bg-indigo-600 px-1 py-1 text-base font-medium text-white hover:bg-indigo-700"
+            onClick={executeCommands}
+          >
+            invoke
+          </button>
+        </div>
+
+        <div className="pb-2">
+          <h2 className="font-bold">Tauri API</h2>
+          <div>open dialog</div>
+          <button
+            className="rounded-md border border-transparent bg-indigo-600 px-1 py-1 text-base font-medium text-white hover:bg-indigo-700"
+            onClick={openDialog}
+          >
+            openDialog
+          </button>
+          <div>get local image</div>
+        </div>
       </main>
     </div>
   );
