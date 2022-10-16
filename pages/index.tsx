@@ -1,18 +1,28 @@
 import { invoke } from "@tauri-apps/api/tauri";
 import { open } from "@tauri-apps/api/dialog";
-import type { NextPage } from "next";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
+import { useEffect, useState } from "react";
 
-const Home: NextPage = () => {
+const Home = () => {
+  const [appDir, setAppDir] = useState<string>("");
   const openDialog = () => {
     open().then((files) => console.log(files));
   };
 
   const executeCommands = () => {
-    const isClient = typeof window !== "undefined";
-    isClient && invoke("simple_commnad");
+    invoke("simple_commnad");
   };
+
+  useEffect(() => {
+    (async () => {
+      const { path } = await import("@tauri-apps/api");
+      path.appDir().then((dir) => {
+        console.log(dir);
+        setAppDir(dir);
+      });
+    })();
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -44,6 +54,8 @@ const Home: NextPage = () => {
             openDialog
           </button>
           <div>get local image</div>
+          <div>file</div>
+          <p>appDir:{appDir}</p>
         </div>
       </main>
     </div>
