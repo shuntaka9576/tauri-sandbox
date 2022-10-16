@@ -3,6 +3,7 @@ import { open } from "@tauri-apps/api/dialog";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import { useEffect, useState } from "react";
+import * as fs from "@tauri-apps/api/fs";
 
 const Home = () => {
   const [appDir, setAppDir] = useState<string>("");
@@ -17,9 +18,27 @@ const Home = () => {
   useEffect(() => {
     (async () => {
       const { path } = await import("@tauri-apps/api");
-      path.appDir().then((dir) => {
-        console.log(dir);
-        setAppDir(dir);
+      // path系のAPI
+      const appDir = await path.appDir();
+      setAppDir(appDir);
+      const audioDir = await path.audioDir();
+      const homeDir = await path.homeDir();
+      const cacheDir = await path.cacheDir();
+      const downloadDir = await path.downloadDir();
+      const dataDir = await path.dataDir();
+      const deskTopDir = await path.desktopDir();
+
+      console.log(`appDir: ${appDir}`);
+      console.log(`audioDir: ${audioDir}`);
+      console.log(`homeDir: ${homeDir}`);
+      console.log(`cacheDir: ${cacheDir}`);
+      console.log(`downloadDir: ${downloadDir}`);
+      console.log(`dataDir: ${dataDir}`);
+      console.log(`deskTopDir: ${deskTopDir}`);
+
+      await fs.createDir("images", {
+        dir: fs.BaseDirectory.App,
+        recursive: true,
       });
     })();
   }, []);
